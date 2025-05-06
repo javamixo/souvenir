@@ -1,0 +1,36 @@
+{% extends 'shop/base.html' %}
+{% load custom_filters %}
+{% block content %}
+    <h1>Purchase Details</h1>
+    <div class="card">
+        <div class="card-body">
+            <p><strong>Purchase Date:</strong> {{ purchase.purchase_date }}</p>
+            <p><strong>Artist:</strong> {{ purchase.artist.name }}</p>
+            <p><strong>Total Amount:</strong> {{ purchase.total_amount }}</p>
+            <p><strong>Notes:</strong> {{ purchase.notes }}</p>
+
+            <h2>Purchase Items</h2>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Unit Price</th>
+                        <th>Total Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in purchase.items.all %}
+                        <tr>
+                            <td>{{ item.product.name }}</td>
+                            <td>{{ item.quantity }}</td>
+                            <td>{{ item.unit_price }}</td>
+                            <td>{{ item.quantity|multiply:item.unit_price }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+             <a href="{% url 'shop:purchase_list' %}" class="btn btn-secondary">Back to Purchases</a>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends 'shop/base.html' %}
+{% block content %}
+    <h1>{{ title }}</h1>
+    <form method="post">
+        {% csrf_token %}
+        {% if form.errors %}
+            <div class="alert alert-danger">
+                {% for field in form %}
+                    {% if field.errors %}
+                        <strong>{{ field.label_tag }}</strong>: {{ field.errors|join:", " }}<br>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endif %}
+        <div class="form-group">
+            {{ form.transaction_date.label_tag }}
+            {{ form.transaction_date }}
+        </div>
+        <div class="form-group">
+            {{ form.transaction_type.label_tag }}
+            {{ form.transaction_type }}
+        </div>
+        <div class="form-group">
+            {{ form.description.label_tag }}
+            {{ form.description }}
+        </div>
+        <div class="form-group">
+            {{ form.amount.label_tag }}
+            {{ form.amount }}
+        </div>
+         <div class="form-group">
+            {{ form.related_purchase.label_tag }}
+            {{ form.related_purchase }}
+        </div>
+         <div class="form-group">
+            {{ form.related_sale.label_tag }}
+            {{ form.related_sale }}
+        </div>
+        <div class="form-group">
+            {{ form.notes.label_tag }}
+            {{ form.notes }}
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+        <a href="{% url 'shop:transaction_list' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+{% endblock %}

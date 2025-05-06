@@ -1,0 +1,116 @@
+{% extends 'shop/base.html' %}
+{% block content %}
+    <h1>KPI Dashboard</h1>
+
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Sales (Last 7 Days)</h5>
+                    <p class="card-text">${{ sales_last_7_days }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Sales (Last 30 Days)</h5>
+                    <p class="card-text">${{ sales_last_30_days }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Overall Profit Margin</h5>
+                <p class="card-text">${{ overall_profit_margin }}</p>
+              </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Top Selling Products (Last 30 Days)</h5>
+                    <ul>
+                        {% for product in top_selling_products %}
+                            <li>{{ product.product__name }} - {{ product.total_sold }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Low Stock Products</h5>
+                    <ul>
+                        {% for product in low_stock_products %}
+                            <li>{{ product.name }} ({{ product.stock_quantity }} left)</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-4">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Balance History (Last 30 Days)</h5>
+            <canvas id="balanceChart" width="400" height="200"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+    const ctx = document.getElementById('balanceChart').getContext('2d');
+    const balanceChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: {{ balance_dates|safe }},
+            datasets: [{
+                label: 'Balance',
+                data: {{ balance_amounts|safe }},
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Balance Over Time',
+                    font: {
+                        size: 16
+                    }
+                },
+                legend: {
+                    position: 'bottom'
+                }
+            },
+            scales: {
+                x: {
+                    display: true,
+                    title: {
+                        display: true,
+                        text: 'Date'
+                    }
+                },
+                y: {
+                    display: true,
+                    title: {
+                        display: true,
+                        text: 'Amount'
+                    }
+                }
+            }
+        }
+    });
+    </script>
+{% endblock %}

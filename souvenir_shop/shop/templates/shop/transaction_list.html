@@ -1,0 +1,52 @@
+{% extends 'shop/base.html' %}
+{% block content %}
+    <h1>Transactions</h1>
+    <a href="{% url 'shop:transaction_create' %}" class="btn btn-primary">Add Transaction</a>
+     <div class="card">
+      <div class="card-body">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                    <th>Amount</th>
+                    <th>Related Purchase</th>
+                    <th>Related Sale</th>
+                    <th>Notes</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for transaction in transactions %}
+                    <tr>
+                        <td>{{ transaction.transaction_date }}</td>
+                        <td>{{ transaction.transaction_type }}</td>
+                        <td>{{ transaction.description }}</td>
+                        <td>{{ transaction.amount }}</td>
+                        <td>
+                            {% if transaction.related_purchase %}
+                                <a href="{% url 'shop:purchase_detail' pk=transaction.related_purchase.pk %}">
+                                    {{ transaction.related_purchase }}
+                                </a>
+                            {% endif %}
+                        </td>
+                        <td>
+                             {% if transaction.related_sale %}
+                                <a href="{% url 'shop:sale_detail' pk=transaction.related_sale.pk %}">
+                                    {{ transaction.related_sale }}
+                                </a>
+                            {% endif %}
+                        </td>
+                        <td>{{ transaction.notes }}</td>
+                        <td>
+                            <a href="{% url 'shop:transaction_update' pk=transaction.pk %}" class="btn btn-sm btn-secondary">Edit</a>
+                            <a href="{% url 'shop:transaction_delete' pk=transaction.pk %}" class="btn btn-sm btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+       </div>
+     </div>
+{% endblock %}ml>

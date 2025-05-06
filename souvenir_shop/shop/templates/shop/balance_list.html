@@ -1,0 +1,27 @@
+{% extends 'shop/base.html' %}
+{% block content %}
+    <h1>Balance History</h1>
+    <p><strong>Current Balance:</strong> ${{ current_balance }}</p>
+    <div class="card">
+      <div class="card-body">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Amount</th>
+                    <th>Notes</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for balance in balances %}
+                    <tr>
+                        <td>{{ balance.balance_date }}</td>
+                        <td>{{ balance.amount }}</td>
+                        <td>{{ balance.notes }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+       </div>
+     </div>
+{% endblock %}

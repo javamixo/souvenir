@@ -1,0 +1,33 @@
+{% extends 'shop/base.html' %}
+{% block content %}
+    <h1>Purchases</h1>
+    <a href="{% url 'shop:purchase_create' %}" class="btn btn-primary">Add Purchase</a>
+     <div class="card">
+      <div class="card-body">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Purchase Date</th>
+                    <th>Artist</th>
+                    <th>Total Amount</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for purchase in purchases %}
+                    <tr>
+                        <td>{{ purchase.purchase_date }}</td>
+                        <td>{{ purchase.artist.name }}</td>
+                        <td>{{ purchase.total_amount }}</td>
+                        <td>
+                            <a href="{% url 'shop:purchase_detail' pk=purchase.pk %}" class="btn btn-sm btn-info">Details</a>
+                            <a href="{% url 'shop:purchase_update' pk=purchase.pk %}" class="btn btn-sm btn-secondary">Edit</a>
+                            <a href="{% url 'shop:purchase_delete' pk=purchase.pk %}" class="btn btn-sm btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+       </div>
+     </div>
+{% endblock %}

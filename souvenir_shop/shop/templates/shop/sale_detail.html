@@ -1,0 +1,35 @@
+{% extends 'shop/base.html' %}
+{% load custom_filters %}
+{% block content %}
+    <h1>Sale Details</h1>
+    <div class="card">
+        <div class="card-body">
+            <p><strong>Sale Date:</strong> {{ sale.sale_date }}</p>
+            <p><strong>Total Amount:</strong> {{ sale.total_amount }}</p>
+            <p><strong>Notes:</strong> {{ sale.notes }}</p>
+
+            <h2>Sale Items</h2>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Unit Price</th>
+                        <th>Total Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in sale.items.all %}
+                        <tr>
+                            <td>{{ item.product.name }}</td>
+                            <td>{{ item.quantity }}</td>
+                            <td>{{ item.unit_price }}</td>
+                            <td>{{ item.quantity|multiply:item.unit_price }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+             <a href="{% url 'shop:sale_list' %}" class="btn btn-secondary">Back to Sales</a>
+        </div>
+    </div>
+{% endblock %}

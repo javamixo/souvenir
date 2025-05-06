@@ -1,0 +1,30 @@
+{% extends 'shop/base.html' %}
+{% block content %}
+    <h1>Artists</h1>
+    <a href="{% url 'shop:artist_create' %}" class="btn btn-primary">Add Artist</a>
+    <div class="card">
+        <div class="card-body">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Contact Info</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for artist in artists %}
+                        <tr>
+                            <td>{{ artist.name }}</td>
+                            <td>{{ artist.contact_information }}</td>
+                            <td>
+                                <a href="{% url 'shop:artist_update' pk=artist.pk %}" class="btn btn-sm btn-secondary">Edit</a>
+                                <a href="{% url 'shop:artist_delete' pk=artist.pk %}" class="btn btn-sm btn-danger">Delete</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

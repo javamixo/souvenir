@@ -1,0 +1,31 @@
+{% extends 'shop/base.html' %}
+{% block content %}
+    <h1>Sales</h1>
+    <a href="{% url 'shop:sale_create' %}" class="btn btn-primary">Add Sale</a>
+     <div class="card">
+      <div class="card-body">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Sale Date</th>
+                    <th>Total Amount</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for sale in sales %}
+                    <tr>
+                        <td>{{ sale.sale_date }}</td>
+                        <td>{{ sale.total_amount }}</td>
+                        <td>
+                             <a href="{% url 'shop:sale_detail' pk=sale.pk %}" class="btn btn-sm btn-info">Details</a>
+                            <a href="{% url 'shop:sale_update' pk=sale.pk %}" class="btn btn-sm btn-secondary">Edit</a>
+                            <a href="{% url 'shop:sale_delete' pk=sale.pk %}" class="btn btn-sm btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+       </div>
+     </div>
+{% endblock %}
