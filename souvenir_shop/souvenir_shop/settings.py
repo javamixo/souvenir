@@ -23,9 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-mgk04q20pg5s@zrh74dq#q09ovt4j1nve5qzb0j2&y3jathm+4'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False # set false in production
+ALLOWED_HOSTS = ['souvenir-97x3.onrender.com', '127.0.0.1', 'localhost']  # Add your Render subdomain
 
-ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
